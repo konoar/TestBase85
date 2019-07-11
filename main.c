@@ -23,10 +23,10 @@ const unsigned char LOOKUP[] =
 	0x59, 0x5A, 0x5B, 0x5C, 0x5D, 0x5E, 0x5F, 0x60, // YZ[/]^_`
 	0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, // abcdefgh
 	0x69, 0x6A, 0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, // ijklmnop
-	0x71, 0x72, 0x73, 0x74, 0x75					// qrstu
+	0x71, 0x72, 0x73, 0x74, 0x75                    // qrstu
 };
 
-int Calc(const char c1, const char c2, const char c3, const char c4, char *a85)
+int calc(const char c1, const char c2, const char c3, const char c4, char *a85)
 {
 
 	#define KS_SHIFT(_a_,_b_) (((unsigned int)_a_) << _b_)
@@ -54,7 +54,7 @@ int main(int argc, const char *argv[])
 {
 
 	unsigned int len, cnt;
-	char buff[5], tmp[4];
+	char buff[5];
 
 	void myput(const char c)
 	{
@@ -73,7 +73,7 @@ int main(int argc, const char *argv[])
 	cnt = 0;
 
 	for (int idx = 0; idx < (len >> 2); idx++) {
-		if (KS_BASE85_OK == Calc(
+		if (KS_BASE85_OK == calc(
 			argv[1][idx * 4], argv[1][idx * 4 + 1], argv[1][idx * 4 + 2], argv[1][idx * 4 + 3], buff)) {
 			myput(buff[0]);
 			myput(buff[1]);
@@ -86,7 +86,7 @@ int main(int argc, const char *argv[])
 	}
 
 	if (len % 4) {
-		if (KS_BASE85_OK == Calc(argv[1][len & 0xFFFFFFFC],
+		if (KS_BASE85_OK == calc(argv[1][len & 0xFFFFFFFC],
 		         (len % 4 > 1) ? argv[1][len & 0xFFFFFFFC + 1] : 0,
 		         (len % 4 > 2) ? argv[1][len & 0xFFFFFFFC + 2] : 0,
 		         (len % 4 > 3) ? argv[1][len & 0xFFFFFFFC + 3] : 0, buff)) {
